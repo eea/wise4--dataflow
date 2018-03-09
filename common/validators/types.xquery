@@ -11,13 +11,13 @@ declare function vldtypes:validate-data-types(
     $model as element(model),
     $dataRows as element(dataRow)*,
     $exceptions as element(typeExceptions)
-)
-as element(result)
-{
-    let $mixedResultRows := vldtypes:_validate($model, $exceptions, $dataRows, 1, 1, ())
-    let $resultRows := vldres:filter-max-qc-level-by-flagged-values($mixedResultRows)
-    let $counts := vldres:calculate-column-counts($resultRows, $model/columns/column)
-    return vldres:create-result($resultRows, $counts)
+    )
+    as element(result)
+    {
+        let $mixedResultRows := vldtypes:_validate($model, $exceptions, $dataRows, 1, 1, ())
+        let $resultRows := vldres:filter-max-qc-level-by-flagged-values($mixedResultRows)
+        let $counts := vldres:calculate-column-counts($resultRows, $model/columns/column)
+        return vldres:create-result($resultRows, $counts)
 };
 
 declare function vldtypes:_validate(

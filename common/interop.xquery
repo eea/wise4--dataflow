@@ -2,7 +2,7 @@ xquery version "1.0" encoding "UTF-8";
 
 module namespace interop = 'http://converters.eionet.europa.eu/common/interop';
 
-declare variable $interop:_TEST-MODE as xs:boolean := false();
+declare variable $interop:_TEST-MODE as xs:boolean := true();
 
 declare function interop:get-envelope-metadata($sourceUrl as xs:string)
 as element(envelope)

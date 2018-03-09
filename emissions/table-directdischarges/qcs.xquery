@@ -291,6 +291,7 @@ declare function emissions_directdischarges:_run-mandatory-field-qc($qc as eleme
 as element(div)
 {
     let $columnExceptions := $qc/columnExceptions/*
+    let $asd := trace($columnExceptions)
     let $validationResult := vldmandatory:validate-mandatory-columns($model, $columnExceptions, $dataRows)
     let $colunsToDisplay := $model/columns/column
     return uimandatory:build-mandatory-column-qc-markup($qc, $colunsToDisplay, $validationResult)
