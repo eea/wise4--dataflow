@@ -210,7 +210,8 @@ as element(row)*
                 if (vldres:_is-trucation-row($resultRow)) then
                     $resultRow
                 else
-                    let $blockerColumns := $resultRow/flaggedColumns/flaggedColumn[@level = $qclevels:BLOCKER]
+                    (:let $blockerColumns := $resultRow/flaggedColumns/flaggedColumn[@level = $qclevels:BLOCKER]:)
+                    let $blockerColumns := $resultRow/flaggedColumns/flaggedColumn
                     return
                         if (empty($blockerColumns)) then
                             ()

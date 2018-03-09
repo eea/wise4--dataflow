@@ -10,7 +10,7 @@ import module namespace vldres = 'http://converters.eionet.europa.eu/common/vali
 
 declare function vldmandatory:validate-mandatory-columns(
     $model as element(model),
-    $columnExceptions as element(columnException)*, 
+    $columnExceptions as element(columnException)*,
     $dataRows as element(dataRow)*
 )
 as element(result)
@@ -22,12 +22,13 @@ as element(result)
 declare function vldmandatory:validate-mandatory-columns(
     $model as element(model),
     $mandatoryColumns as element(column)*,
-    $columnExceptions as element(columnException)*, 
+    $columnExceptions as element(columnException)*,
     $dataRows as element(dataRow)*
 )
 as element(result)
 {
     let $mixedResultRows := vldmandatory:_validate($model, $mandatoryColumns, $columnExceptions, $dataRows)
+    (:let $asd := trace($mixedResultRows, "mixedResultRows"):)
     let $resultRows := vldres:filter-max-qc-level-by-flagged-columns($mixedResultRows)
     let $columnCounts := vldres:calculate-column-counts($resultRows, $mandatoryColumns)
     return vldres:create-result($resultRows, $columnCounts)
@@ -97,8 +98,9 @@ as element(row)?
                 ()
             else
                 let $qcLevel := vldmandatory:_resolve-column-qc-level($model ,$mandatoryColumn, $columnExceptions, $dataRow)
+                (:let $asd := trace($qcLevel, "qcLevel: "):)
                 return
-                    if ($qcLevel = $qclevels:OK or $qcLevel != $acceptableQcLevel) then
+                    if ($qcLevel = $qclevels:OK or $qcLevel < $acceptableQcLevel - 3) then
                         ()
                     else
                         vldres:create-flagged-column($mandatoryColumn, $qcLevel)

@@ -37,7 +37,8 @@ as element(div)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $envelopeCountryCode := upper-case(string($envelope/countrycode))
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
-    let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $envelopeCountryCode, "_MonitoringSite.rdf"))/*
+    (:let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $envelopeCountryCode, "_MonitoringSite.rdf"))/*:)
+    let $monitoringSitesVocabulary := doc("../../water-quality-marine/xmlfile/2017_MonitoringSite.rdf")/*
     return emissions_riverineinputloads:run-checks($dataDoc, $model, $envelope, $dataFlowCycles, $monitoringSitesVocabulary)
 };
 
@@ -96,7 +97,7 @@ as element(qc)
 {
     let $mandatoryColumns := meta:get-mandatory-columns($model)
     let $mandatoryColumnString := string-join($mandatoryColumns/meta:get-column-name(.), ", ")
-    let $exceptionColumnNames := ("resultEmissionsValue")
+    let $exceptionColumnNames := ("resultEmissionsValue", "resultEmissionsUom")
     let $dependencyColumnName := "resultObservationStatus"
     return
         <qc id="erilqc1">
