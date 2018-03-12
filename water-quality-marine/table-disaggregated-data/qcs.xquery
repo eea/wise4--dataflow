@@ -36,7 +36,7 @@ as element(div)
     let $model := meta:get-table-metadata($wqlmdis:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $countryCode := string($envelope//countrycode)
-    let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $countryCode, "_MonitoringSite.rdf"))/*
+    let $monitoringSitesVocabulary := doc("../xmlfile/2017_MonitoringSite.rdf")/*
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
 
     return wqlmdis:run-checks($dataDoc, $model, $envelope, $monitoringSitesVocabulary, $dataFlowCycles)
