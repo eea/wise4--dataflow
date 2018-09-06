@@ -47,7 +47,7 @@ declare variable $wqlagwb:TABLE-ID := "9324";
 declare function wqlagwb:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:AggregatedDataByWaterBody
     let $model := meta:get-table-metadata($wqlagwb:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $vocabularyWaterBodies := doc("../xmlfile/WaterBody.rdf")/*
@@ -60,7 +60,7 @@ as element(div)
 };
 
 declare function wqlagwb:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model),
     $envelope as element(envelope),
     $vocabularyWaterBodies as element(),
@@ -288,8 +288,6 @@ as element(qc)
         <caption>6. Water body identifier reference test</caption>
         <description>
             Tested presence of the waterBodyIdentifier, and its respective waterBodyIdentifierScheme, in the <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/wise/WaterBody/">official reference list</a>. The list has been created from the previously reported data on water bodies.
-            <br/><br/>
-            Due to the ongoing reporting of WFD data, which includes also update of the water bodies, the detected discrepancies are currently not considered as errors. They will be considered as blocker errors in the future reporting cycles.
         </description>
         <onSuccess>
             <message>OK - data passed the test.</message>
@@ -297,6 +295,9 @@ as element(qc)
         <onWarning>
             <message>WARNING - some of the waterBodyIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
         </onWarning>
+        <onBlocker>
+            <message>BLOCKER - some of the waterBodyIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
+        </onBlocker>
     </qc>
 };
 

@@ -33,7 +33,7 @@ declare variable $wqnresvdata:TABLE-ID := "9708";
 declare function wqnresvdata:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:ReservoirData
     let $model := meta:get-table-metadata($wqnresvdata:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $vocabularySurfaceWaterBodies := doc("../xmlfile/SurfaceWaterBody.rdf")/*
@@ -43,7 +43,7 @@ as element(div)
 };
 
 declare function wqnresvdata:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $vocabularySurfaceWaterBodies as element(),

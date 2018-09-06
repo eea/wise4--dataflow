@@ -30,16 +30,17 @@ declare variable $wqnmndata:TABLE-ID := "9707";
 declare function wqnmndata:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:MonitoringData
     let $model := meta:get-table-metadata($wqnmndata:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
-    let $monitoringSitesVocabulary := doc("../xmlfile/MonitoringSite.rdf")/*
+    let $countryCode := string($envelope//countrycode)
+    let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $countryCode, "_MonitoringSite.rdf"))/*
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
     return wqnmndata:run-checks($dataDoc, $model, $envelope, $monitoringSitesVocabulary, $dataFlowCycles)
 };
 
 declare function wqnmndata:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $monitoringSitesVocabulary as element(),

@@ -28,7 +28,6 @@ declare function vldmandatory:validate-mandatory-columns(
 as element(result)
 {
     let $mixedResultRows := vldmandatory:_validate($model, $mandatoryColumns, $columnExceptions, $dataRows)
-    (:let $asd := trace($mixedResultRows, "mixedResultRows"):)
     let $resultRows := vldres:filter-max-qc-level-by-flagged-columns($mixedResultRows)
     let $columnCounts := vldres:calculate-column-counts($resultRows, $mandatoryColumns)
     return vldres:create-result($resultRows, $columnCounts)
@@ -98,7 +97,6 @@ as element(row)?
                 ()
             else
                 let $qcLevel := vldmandatory:_resolve-column-qc-level($model ,$mandatoryColumn, $columnExceptions, $dataRow)
-                (:let $asd := trace($qcLevel, "qcLevel: "):)
                 return
                     if ($qcLevel = $qclevels:OK or $qcLevel < $acceptableQcLevel - 3) then
                         ()

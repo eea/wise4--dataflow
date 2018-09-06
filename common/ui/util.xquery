@@ -35,8 +35,18 @@ as element(div)
         for $qcCode in $menu/li/string(span)
         return qclevels:to-qc-level($qcCode)
     )
+    (: TODO converters accepts only one feedbackStatus - the following code needs to be refactored. :)
     return
-        if($tableCaption = "Envelope") then
+        if($tableCaption = "TODOSEPARATE") then
+            <div>
+                <h2 id="feedbackStatus_{$tableCaption}">The following tests were performed against the table: { $dsCaption } / { $tableCaption }</h2>
+                <div nid="feedbackStatus_{$tableCaption}" dsCaption="{$dsCaption}" tableCaption="{$tableCaption}" level="{$qcMaxResult}" class="{ qclevels:to-qc-code($qcMaxResult) }" style="display: none"> {
+                    uiutil:build-feedback-status($qcMaxResult)
+                }
+                </div>
+                { $menu }
+            </div>
+         else
             <div>
                 <h2>The following tests were performed against { $dsCaption } / { $tableCaption }</h2>
                 <div id="feedbackStatus" class="{ qclevels:to-qc-code($qcMaxResult) }" style="display: none"> {
@@ -45,15 +55,6 @@ as element(div)
                 </div>
                 { $menu }
             </div>
-         else
-        <div>
-            <h2 id="feedbackStatus_{$tableCaption}">The following tests were performed against the table: { $dsCaption } / { $tableCaption }</h2>
-            <div nid="feedbackStatus_{$tableCaption}" dsCaption="{$dsCaption}" tableCaption="{$tableCaption}" level="{$qcMaxResult}" class="{ qclevels:to-qc-code($qcMaxResult) }" style="display: none"> {
-                uiutil:build-feedback-status($qcMaxResult)
-            }
-            </div>
-            { $menu }
-        </div>
 };
 
 declare function uiutil:build-feedback-status($qcMaxResult) {
@@ -228,7 +229,7 @@ as element(p)
     <p>{ $qc/description }</p>
 };
 
-declare function uiutil:create-section-summary($qcEvent as element())
+declare function uiutil:create-section-summary($qcEvent as element()?)
 as element(span)
 {
     <span class="summary">{ string($qcEvent/message) }</span>

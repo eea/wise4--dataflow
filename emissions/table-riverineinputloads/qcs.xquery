@@ -37,8 +37,7 @@ as element(div)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $envelopeCountryCode := upper-case(string($envelope/countrycode))
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
-    (:let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $envelopeCountryCode, "_MonitoringSite.rdf"))/*:)
-    let $monitoringSitesVocabulary := doc("../../water-quality-marine/xmlfile/2017_MonitoringSite.rdf")/*
+    let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $envelopeCountryCode, "_MonitoringSite.rdf"))/*
     return emissions_riverineinputloads:run-checks($dataDoc, $model, $envelope, $dataFlowCycles, $monitoringSitesVocabulary)
 };
 

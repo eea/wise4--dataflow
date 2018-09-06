@@ -37,7 +37,7 @@ declare variable $wqnrenfresh:TABLE-ID := "9721";
 declare function wqnrenfresh:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:RenewableFreshwaterResources
     let $model := meta:get-table-metadata($wqnrenfresh:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $vocabularySpatialUnits := doc("http://dd.eionet.europa.eu/vocabulary/wise/SpatialUnit/rdf")/*
@@ -47,7 +47,7 @@ as element(div)
 };
 
 declare function wqnrenfresh:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $vocabularySpatialUnits as element(),

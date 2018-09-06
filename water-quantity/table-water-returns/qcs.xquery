@@ -37,7 +37,7 @@ declare variable $wqnwaterret:TABLE-ID := "9734";
 declare function wqnwaterret:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:WaterReturns
     let $model := meta:get-table-metadata($wqnwaterret:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $vocabularySpatialUnits := doc("http://dd.eionet.europa.eu/vocabulary/wise/SpatialUnit/rdf")/*
@@ -47,7 +47,7 @@ as element(div)
 };
 
 declare function wqnwaterret:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $vocabularySpatialUnits as element(),

@@ -36,7 +36,7 @@ declare variable $wqldis:TABLE-ID := "9153";
 declare function wqldis:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:DisaggregatedData
     let $model := meta:get-table-metadata($wqldis:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $countryCode := string($envelope//countrycode)
@@ -50,7 +50,7 @@ as element(div)
 };
 
 declare function wqldis:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $monitoringSitesVocabulary as element(),
@@ -257,15 +257,13 @@ as element(qc)
         <caption>6. Monitoring site identifier reference test</caption>
         <description>
             Tested presence of the monitoringSiteIdentifier and its respective monitoringSiteIdntifierScheme in the <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/wise/MonitoringSite">official reference list</a>. The list has been created from the previously reported data on monitoring sites.
-            <br/><br/>
-            Due to the ongoing reporting of WFD data, which includes also update of the monitoring sites, the detected discrepancies are currently not considered as errors. They will be considered as blocker errors in the future reporting cycles.
         </description>
         <onSuccess>
             <message>OK - data passed the test.</message>
         </onSuccess>
-        <onWarning>
-            <message>WARNING - some of the monitoringSiteIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
-        </onWarning>
+        <onBlocker>
+            <message>BLOCKER - some of the monitoringSiteIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
+        </onBlocker>
     </qc>
 };
 
@@ -449,7 +447,7 @@ as element(div)
 {
     let $monitoringSiteIdColumn := $model/columns/column[meta:get-column-name(.) = 'monitoringSiteIdentifier']
     let $monitoringSiteIdSchemeColumn := $model/columns/column[meta:get-column-name(.) = 'monitoringSiteIdentifierScheme']
-    let $validationResult :=  vldmsiteid:validate-monitoring-site-identifier-reference($monitoringSiteIdColumn, $monitoringSiteIdSchemeColumn, $monitoringSitesVocabulary, $dataRows)
+    let $validationResult := vldmsiteid:validate-monitoring-site-identifier-reference($monitoringSiteIdColumn, $monitoringSiteIdSchemeColumn, $monitoringSitesVocabulary, $dataRows)
     return uimsiteid:build-monitoring-site-id-reference-qc-markup($qc, $monitoringSiteIdColumn, $monitoringSiteIdSchemeColumn, $validationResult)
 };
 

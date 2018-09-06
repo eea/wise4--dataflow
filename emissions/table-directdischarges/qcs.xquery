@@ -36,7 +36,7 @@ as element(div)
     let $model := meta:get-table-metadata($emissions_directdischarges:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
-    let $vocabularyWaterBodies := doc("../../water-quality-marine/xmlfile/2017_WaterBody.rdf")/*
+    let $vocabularyWaterBodies := doc("../xmlfile/2017_WaterBody.rdf")/*
     return emissions_directdischarges:run-checks($dataDoc, $model, $envelope, $dataFlowCycles, $vocabularyWaterBodies)
 };
 

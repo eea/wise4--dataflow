@@ -156,7 +156,7 @@ as element(row)?
     let $conceptUrl := lower-case(concat($schemeUrlPrefix, $idScheme, ".", $id))
     return
         if ($id != "" and $idScheme != "" and not($conceptUrl = $references)) then
-            vldres:create-result-row($dataRow, vldres:create-flagged-column($identifierColumn, $qclevels:WARNING))
+            vldres:create-result-row($dataRow, vldres:create-flagged-column($identifierColumn, $qclevels:BLOCKER))
         else
             ()
 };

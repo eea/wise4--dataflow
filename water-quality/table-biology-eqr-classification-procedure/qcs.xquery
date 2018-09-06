@@ -32,7 +32,7 @@ declare variable $wqlbioeqrcp:TABLE-ID := "9326";
 declare function wqlbioeqrcp:run-checks($sourceUrl as xs:string)
 as element(div)
 {
-    let $dataDoc := doc($sourceUrl)
+    let $dataDoc := doc($sourceUrl)/*:BiologyEQRClassificationProcedure
     let $model := meta:get-table-metadata($wqlbioeqrcp:TABLE-ID)
     let $envelope := interop:get-envelope-metadata($sourceUrl)
     let $vocabularyObservedPropertyBiologyEQR := doc("http://dd.eionet.europa.eu/vocabulary/wise/ObservedPropertyBiologyEQR/rdf")/*
@@ -40,7 +40,7 @@ as element(div)
 };
 
 declare function wqlbioeqrcp:run-checks(
-    $dataDoc as document-node(),
+    $dataDoc as element()*,
     $model as element(model), 
     $envelope as element(envelope),
     $vocabularyObservedPropertyBiologyEQR as element()
