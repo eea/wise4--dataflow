@@ -2,8 +2,8 @@ xquery version "1.0" encoding "UTF-8";
 
 module namespace rdfutil = 'http://converters.eionet.europa.eu/common/rdfutil';
 
-(:declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";:)
-(:declare namespace skos = "http://www.w3.org/2004/02/skos/core#";:)
+declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+declare namespace skos = "http://www.w3.org/2004/02/skos/core#";
 declare namespace adms = "http://www.w3.org/ns/adms#";
 declare namespace prop = "http://dd.eionet.europa.eu/property/";
 
