@@ -245,8 +245,6 @@ as element(qc)
             <caption>5. Valid codes test</caption>
             <description>
                 Tested the correctness of values against the respective codelists. Checked values are { $codelistColumnsString }.
-                <br/><br/>
-                Due to the ongoing reporting of WFD data, which includes also update of the RBDs, the detected discrepancies in spatialUnitIdentifier values are currently not considered as errors. They will be considered as blocker errors in the future reporting cycles.
             </description>
             <codelistExceptions>
                 <codelistException columnName="spatialUnitIdentifier" onMatch="{ $qclevels:WARNING }" />
@@ -316,8 +314,6 @@ as element(qc)
         <caption>6.2 Spatial unit identifier reference test</caption>
         <description>
             Tested presence of the spatialUnitIdentifier and its respective spatialUnitIdentifierScheme in the <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/wise/SpatialUnit">official reference list</a>. The list has been created from the previously reported data on water bodies.
-            <br/><br/>
-            Due to the ongoing reporting of WFD data, which includes also update of the RBDs, the detected discrepancies are currently not considered as errors. They will be considered as blocker errors in the future reporting cycles.
         </description>
         <onSuccess>
             <message>OK - data passed the test.</message>
@@ -327,6 +323,12 @@ as element(qc)
                 WARNING - some of the spatialUnitIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.
             </message>
         </onWarning>
+        <onBlocker>
+            <message>
+                BLOCKER - some of the spatialUnitIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.
+            </message>
+        </onBlocker>
+
     </qc>
 };
 

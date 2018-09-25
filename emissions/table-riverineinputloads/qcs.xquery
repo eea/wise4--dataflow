@@ -38,6 +38,7 @@ as element(div)
     let $envelopeCountryCode := upper-case(string($envelope/countrycode))
     let $dataFlowCycles := doc("http://converters.eionet.europa.eu/xmlfile/dataflow_cycles.xml")/*
     let $monitoringSitesVocabulary := doc(concat("../xmlfile/", $envelopeCountryCode, "_MonitoringSite.rdf"))/*
+    (:let $monitoringSitesVocabulary := doc("../xmlfile/2017_MonitoringSite.rdf")/*:)
     return emissions_riverineinputloads:run-checks($dataDoc, $model, $envelope, $dataFlowCycles, $monitoringSitesVocabulary)
 };
 
@@ -52,7 +53,7 @@ as element(div)
 {
     let $qcs := emissions_riverineinputloads:getQcMetadata($model, $envelope, $dataFlowCycles)
     let $dataRows := data:get-rows($dataDoc)
-    let $qcResultsMarkup := 
+    let $qcResultsMarkup :=
         <div>
             { emissions_riverineinputloads:_run-mandatory-field-qc($qcs/qc[@id="erilqc1"], $model, $dataRows) }
             { emissions_riverineinputloads:_run-duplicate-rows-qc($qcs/qc[@id="erilqc2"], $model, $dataRows) }
@@ -252,15 +253,13 @@ as element(qc)
         <caption>6. Monitoring site identifier reference test</caption>
         <description>
             Tested presence of the monitoringSiteIdentifier and its respective monitoringSiteIdntifierScheme in the <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/wise/MonitoringSite">official reference list</a>. The list has been created from the previously reported data on monitoring sites.
-            <br/>
-            Due to the ongoing reporting of WFD data, which includes also update of the monitoring sites, the detected discrepancies are currently not considered as errors. They will be considered as blocker errors in the future reporting cycles.
         </description>
         <onSuccess>
             <message>OK - data passed the test.</message>
         </onSuccess>
-        <onWarning>
-            <message>WARNING - some of the monitoringSiteIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
-        </onWarning>
+        <onBlocker>
+            <message>BLOCKER - some of the monitoringSiteIdentifier values are missing in the reference list. Please assure that it is not due to an error and that they are reported under WFD, or report them under WISE Spatial data reporting.</message>
+        </onBlocker>
     </qc>
 };
 
@@ -284,6 +283,11 @@ as element(qc)
                     WARNING - some of the reported phenomenonTimeReferenceYear values are outside the expected range. The detected records will not be processed.
                 </message>
             </onWarning>
+            <onBlocker>
+                <message>
+                    BLOCKER - some of the reported phenomenonTimeReferenceYear values are outside the expected range. The detected records will not be processed.
+                </message>
+            </onBlocker>
         </qc>
 };
 

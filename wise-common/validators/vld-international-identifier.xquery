@@ -154,6 +154,8 @@ as element(row)?
     let $id := data:get-row-values-as-string($dataRow, $identifierColumn)
     let $idScheme := data:get-row-values-as-string($dataRow, $identifierSchemeColumn)
     let $conceptUrl := lower-case(concat($schemeUrlPrefix, $idScheme, ".", $id))
+    (:let $asd := trace($conceptUrl, 'conceptUrl:'):)
+    (:let $asd := trace($references, 'references:'):)
     return
         if ($id != "" and $idScheme != "" and not($conceptUrl = $references)) then
             vldres:create-result-row($dataRow, vldres:create-flagged-column($identifierColumn, $qclevels:BLOCKER))
